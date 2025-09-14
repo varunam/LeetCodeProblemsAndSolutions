@@ -40,7 +40,7 @@ class TreeNode(var `val`: Int) {
     var right: TreeNode? = null
 }
 
-fun createTree(values: List<Int?>): TreeNode? {
+fun createTree(values: List<Int?> = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)): TreeNode? {
     if (values.isEmpty() || values[0] == null) return null
 
     val root = TreeNode(values[0]!!)
@@ -106,6 +106,10 @@ fun printTree(root: TreeNode?) {
         level++
     }
 }
+
+fun printDivider() = println("----------------------------------------------------")
+
+fun printWithDivider(text: String) = println("-------------------$text---------------------")
 
 fun getHeight(root: TreeNode?): Int {
     if (root == null) return 0

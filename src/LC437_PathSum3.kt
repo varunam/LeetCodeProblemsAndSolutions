@@ -4,7 +4,7 @@ fun main() {
     println(pathSum(tree, targetSum))
 }
 
-fun pathSum(root: TreeNode?, targetSum: Int): Int {
+private fun pathSum(root: TreeNode?, targetSum: Int): Int {
     val hashMap = HashMap<Long, Int>()
     hashMap[0L] = 1
     return dfs(root, 0L, targetSum.toLong(), hashMap)
