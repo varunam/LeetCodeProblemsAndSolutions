@@ -137,3 +137,51 @@ fun insertNodeToBST(root: TreeNode?, value: Int): TreeNode? {
     }
     return root
 }
+
+// Definition for a Node
+class GraphNode(
+    val `val`: Int,
+    val neighbors: MutableList<GraphNode> = mutableListOf()
+)
+
+// ========== Helper Methods ==========
+
+// Create graph from adjacency list
+fun createGraph(adjList: Array<IntArray>): GraphNode? {
+    if (adjList.isEmpty()) return null
+
+    val nodes = Array(adjList.size) { i -> GraphNode(i + 1) }
+
+    for (i in adjList.indices) {
+        for (nei in adjList[i]) {
+            nodes[i].neighbors.add(nodes[nei - 1]) // -1 because input is 1-indexed
+        }
+    }
+
+    return nodes[0] // usually LeetCode starts graph from node 1
+}
+
+// Print graph (BFS style)
+fun printGraph(node: GraphNode?) {
+    if (node == null) {
+        println("Graph is empty")
+        return
+    }
+
+    val visited = mutableSetOf<Int>()
+    val queue: ArrayDeque<GraphNode> = ArrayDeque()
+    queue.add(node)
+
+    while (queue.isNotEmpty()) {
+        val curr = queue.removeFirst()
+        if (curr.`val` in visited) continue
+        visited.add(curr.`val`)
+
+        val neiValues = curr.neighbors.map { it?.`val` }
+        println("Node ${curr.`val`} -> Neighbors $neiValues")
+
+        for (nei in curr.neighbors) {
+            if (nei?.`val` !in visited) nei?.let { queue.add(it) }
+        }
+    }
+}

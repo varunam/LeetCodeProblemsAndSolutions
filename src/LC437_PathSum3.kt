@@ -1,6 +1,7 @@
 fun main() {
-    val tree = createTree(listOf(10,5,-3,3,2,null,11,3,-2,null,1))
-    val targetSum = 8
+    // val tree = createTree(listOf(10,5,-3,3,2,null,11,3,-2,null,1))
+    val tree = createTree(listOf(1, -2, -3))
+    val targetSum = -1
     println(pathSum(tree, targetSum))
 }
 
@@ -16,12 +17,12 @@ private fun dfs(node: TreeNode?, currentSum: Long, targetSum: Long, hashMap: Has
     var newSum = currentSum + node.`val`
     var count = hashMap.getOrDefault(newSum - targetSum, 0)
 
-    hashMap[newSum] = hashMap.getOrDefault(newSum - targetSum, 0) + 1
+    hashMap[newSum] = hashMap.getOrDefault(newSum, 0) + 1
 
     count += dfs(node.left, newSum, targetSum, hashMap)
     count += dfs(node.right, newSum, targetSum, hashMap)
 
-    hashMap[newSum] = hashMap[newSum]!! - 1
+    // hashMap[newSum] = hashMap[newSum]!! - 1
 
     return count
 }
