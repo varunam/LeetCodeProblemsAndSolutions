@@ -16,7 +16,7 @@ fun main() {
     printWithDivider("Cloning Graph")
     printDivider()
 
-    val clonedNode = cloneGraph(graph)
+    val clonedNode = cloneGraphBfs(graph)
     printGraph(clonedNode)
 }
 
@@ -36,6 +36,30 @@ private fun dfs(node: GraphNode, map: HashMap<GraphNode, GraphNode>): GraphNode 
         newNode.neighbors.add(dfs(nei, map))
     }
 
+    return newNode
+}
+
+private fun cloneGraphBfs(node: GraphNode?): GraphNode? {
+    if(node == null) return null
+
+    val hashMap = hashMapOf<GraphNode, GraphNode>()
+    val queue = ArrayDeque<GraphNode>()
+
+    val newNode = GraphNode(node.`val`)
+    hashMap[node] = newNode
+    queue.add(node)
+
+    while(queue.isNotEmpty()) {
+        val current = queue.removeFirst()
+
+        for(nei in current.neighbors) {
+            if(hashMap.containsKey(nei).not()) {
+                hashMap[nei] = GraphNode(nei.`val`)
+                queue.add(nei)
+            }
+            hashMap[current]!!.neighbors.add(hashMap[nei]!!)
+        }
+    }
     return newNode
 }
 
